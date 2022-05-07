@@ -12,7 +12,6 @@ const memoryjs = require('memoryjs');
     // we know how to gather the correct address for mario's powerup location.
     // we can use to this calculate an offset that we can then use for future
     // addresses. might be a bit inefficient, but should work.
-
     // here we just read in the address location to the powerup status.
     const pointerToData = memoryjs.readBuffer(proc.handle, proc.baseAddress + 0x36E5A0, 4).readIntLE(0, 4);
 
@@ -53,9 +52,15 @@ const openProcess = () => {
     }
 };
 
-
+const readHexString = (proc, smwAddress, length) => {
+    // smwAddress is a string, so we convert it.
+    const addr = Number(smwAddress);
+    const address = convertSMWCentralAddressToReal(proc, addr);
+    return memoryjs.readBuffer(proc.handle, address, length).toString('hex');
+};
 
 module.exports = {
     openProcess,
-    convertSMWCentralAddressToReal
+    convertSMWCentralAddressToReal,
+    readHexString
 }
