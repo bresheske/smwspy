@@ -52,10 +52,20 @@ const openProcess = () => {
     }
 };
 
-const readHexString = (proc, smwAddress, length) => {
+const readHexString = (proc, smwAddress, length, offsetAddress) => {
     // smwAddress is a string, so we convert it.
     const addr = Number(smwAddress);
-    const address = convertSMWCentralAddressToReal(proc, addr);
+    let address = convertSMWCentralAddressToReal(proc, addr);
+    if (offsetAddress) {
+        // if we have an offset, we need to read the offset address to gather our
+        // offset. this is used in things like sprite tables.
+        const offsetAddr = Number(offsetAddress);
+        const offsetActual = convertSMWCentralAddressToReal(proc, offsetAddr);
+        // read the offset. should just be one byte.
+        const offsetAmount = memoryjs.readBuffer(proc.handle, offsetActual, 1).readIntLE(0, 1);
+        // add it to our address.
+        address += offsetAmount;
+    }
     return memoryjs.readBuffer(proc.handle, address, length).toString('hex');
 };
 

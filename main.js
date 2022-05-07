@@ -55,7 +55,7 @@ const refreshFuncReadMemory = async () => {
             data.push({
                 name: watch.name,
                 address: watch.address,
-                value: smw.readHexString(process, watch.address, 1)
+                value: smw.readHexString(process, watch.address, parseInt(watch.length), watch.offsetAddress)
             });
         }
     }

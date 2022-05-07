@@ -1,3 +1,6 @@
 [
-    { "name": "Mario Powerup", "address": "0x007E0019" }
+    { "name": "Mario Powerup", "address": "0x7E0019", "length": 1 },
+    { "name": "Kamek Index", "address": "0x7E18C5", "length": 1 },
+    { "name": "Kamek Phase", "address": "0x7E1504", "offsetAddress": "0x7E18C5", "length": 1 },
+    { "name": "Kamek State", "address": "0x7E1510", "offsetAddress": "0x7E18C5", "length": 1 }
 ]
